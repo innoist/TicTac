@@ -89,7 +89,7 @@ $(function () {
     setLevel();
   }
   // Check App Id
-  window.location.hash = 'pageone';
+  window.location.hash = 'contact';
   $.mobile.initializePage();
   
   $(document).on('pagebeforeshow', '#pagethree', function(){

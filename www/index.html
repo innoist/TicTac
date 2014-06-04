@@ -23,7 +23,10 @@
     <div data-role="page" id="contact">
        <a id="start1" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto; margin-top:20px">Start</a>
     </div>
-    
+    <div id="showRequestDiv" style="margin-top:120px;display:none;">
+        <input type="button" value="Accept" id="accept" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
+        <input type="button" value="Reject" id="reject" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
+    </div>
     <div id="requestApprovalDiv" style="margin-top:120px;">
         <input  type="hidden" id="groupName"/>
         <input  type="hidden" id="playWithAppId"/>
@@ -42,10 +45,7 @@
                 <!--<a id="resetLevel" data-rel="popup" class="ui-btn ui-shadow ui-btn-corner-all" data-transition="slideup">Reset Level</a>
                 <label id="toast" class="ui-label" style="display: block; font-size: 170%"></label>-->
             </div>
-            <div id="showRequestDiv" style="margin-top:120px;display:none;">
-                <input type="button" value="Accept" id="accept" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
-                <input type="button" value="Reject" id="reject" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
-            </div>
+            
             <div id="pagetwo" data-role="popup" data-dismissible="true" data-theme="a" class="ui-corner-all ui-popup ui-body-a ui-overlay-shadow" style="margin-top:20px">
                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
                 <div id="screenHomeA">
