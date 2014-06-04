@@ -1,0 +1,565 @@
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <title>TikTok</title>
+    <link rel="stylesheet" type="text/css" href="css/TicTok.css">
+    <link href="css/timeTo.css" type="text/css" rel="stylesheet"/>
+    <script type="text/css">
+        *{
+            text-shadow: none !important;
+            -webkit-box-shadow: none !important;
+            -webkit-border-radius:0!important;
+            -webkit-border-top-left-radius:0!important;
+            -webkit-border-bottom-left-radius:0!important;
+            -webkit-border-bottom-right-radius:0!important;
+            -webkit-border-top-right-radius:0!important;
+        }
+    </script>
+</head>
+<body>
+    
+    <div data-role="page" id="contact">
+       <a id="start1" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto; margin-top:20px">Start</a>
+    </div>
+    
+    <div id="requestApprovalDiv" style="margin-top:120px;">
+        <input  type="hidden" id="groupName"/>
+        <input  type="hidden" id="playWithAppId"/>
+        <input  type="hidden" id="appIdFromServer"/>
+        <input  type="hidden" id="formAppId"/>
+        <input  type="hidden" id="toAppId"/>
+        <input  type="hidden" id="gmType"/>
+        <input  type="hidden" id="bdSize"/>
+        <input  type="hidden" id="playerz"/>
+        <input  type="hidden" id="winStk"/>
+    </div >
+    <div data-role="page" id="pageone">
+        <div data-role="main" class="ui-content">
+            <div style="margin-top: 15%; width: 50%; margin-left: auto; margin-right: auto;">
+                <a href="#pagetwo" data-rel="popup" class="ui-btn ui-shadow ui-btn-corner-all" data-transition="slideup" id="popupButton">Start</a>
+                <!--<a id="resetLevel" data-rel="popup" class="ui-btn ui-shadow ui-btn-corner-all" data-transition="slideup">Reset Level</a>
+                <label id="toast" class="ui-label" style="display: block; font-size: 170%"></label>-->
+            </div>
+            <div id="showRequestDiv" style="margin-top:120px;display:none;">
+                <input type="button" value="Accept" id="accept" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
+                <input type="button" value="Reject" id="reject" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
+            </div>
+            <div id="pagetwo" data-role="popup" data-dismissible="true" data-theme="a" class="ui-corner-all ui-popup ui-body-a ui-overlay-shadow" style="margin-top:20px">
+                <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
+                <div id="screenHomeA">
+                    <fieldset data-role="controlgroup" data-mini="true" data-type="vartical" id="gameTypeR">
+                        <input type="radio" name="radio-mini" id="radio-mini-1" value="2" checked="checked" />
+                        <label for="radio-mini-1">Human V Computer</label>
+                        <input type="radio" name="radio-mini" id="radio-mini-2" value="1" />
+                        <label for="radio-mini-2">Human V Human</label>
+                    </fieldset>
+                    <label>Board Size</label>
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-right ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="decBoardSize"></button>
+                    <input id="boardSize" type="textbox" value="10" disabled="true" data-inline="true" style="width: 27%; text-align: center" />
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="incBoardSize"></button>
+                    <label>Players</label>
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-right ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="decPlayers"></button>
+                    <input id="players" type="textbox" value="2" disabled="true" data-inline="true" style="width: 27%; text-align: center" />
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="incPlayers"></button>
+                    <label>Winning Steak</label>
+                    <label id="lblWinSteak" style="font-size: 70%;"></label>
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-l ui-btn-icon-right ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="decSteak"></button>
+                    <input id="winningSteak" type="textbox" value="3" disabled="true" data-inline="true" style="width: 27%; text-align: center" />
+                    <button class="ui-btn ui-btn-inline ui-icon-arrow-r ui-btn-icon-left ui-btn-icon-notext ui-btn-corner-all" data-inline="true" id="incSteak"></button>
+                    <a id="start" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto">Start</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div data-role="content" id="pagefour">
+        <a id="btnClose" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left" style="margin-left:35%; margin-top:20px">Close</a>
+        <ul id="contactlist" data-role="listview" data-filter="true" class="ui-listview"></ul>
+    </div>
+    <div data-role="page" id="pagethree" style="">
+        
+        <div id="screenHome">
+            <canvas id="myCanvas" style="margin-left: 10px; margin-top: 20px;"></canvas>
+            <br />
+            <button id="reset" class="ui-btn ui-shadow ui-btn-corner-all " style="display: inline; margin-left:1%; width: 45%">Reset Board</button>
+            <a id="invite" href="#pagefour" class="ui-btn ui-shadow ui-btn-corner-all" style="display: inline; margin-right: 1%; width: 50%">Invite Friends</a>
+        </div>
+        
+        <div id="timer" style="display:inline; margin-left:auto; margin-right:auto;">
+            <button id="quit" class="ui-btn ui-corner-all ui-shadow" style="display: inline; margin-left: auto; margin-right: auto; width: 45%">Quit Game</button>
+        </div>
+        <div>
+            <img id="playerIcon" src="" class="ui-image" style="display: inline;margin-top: 10px" />
+            <label id="message" class="ui-label" style="display: inline;"></label>
+        </div>
+    </div>
+    
+    <div id="mobileNumber" data-role="popup" data-dialog="true" data-dismissible="false" data-theme="a" class="ui-corner-all ui-popup ui-body-a" style="display:none;text-align:center;">
+        <div style="display: block;">
+            <label style="font-size: 20px;">Enter Your Mobile Number</label>
+            <input id="mobileNum" type="textbox" data-inline="true" style="width: 50%; text-align: center;height:30px" />
+            <a id="mobile" class="ui-btn ui-shadow ui-btn-corner-all ui-nodisc-icon" style="width:20%;margin-left: auto; margin-right: auto;text-align:center;">Submit</a>
+            
+        </div>
+    </div>
+    <script src="js/jquery.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/jquery.mobile-1.4.2.min.js"></script>
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />
+    <script src="js/knockout-3.1.0.js"></script>
+    <script type="application/javascript" src="js/gameLogic.js"> </script>
+    <script src="http://118.139.182.155/Game/Scripts/json2.js" type="text/javascript"></script>
+    <script src="http://118.139.182.155/Game/Scripts/jquery.signalR-1.0.0-rc2.min.js" type="text/javascript"></script>
+    <script src="http://118.139.182.155/Game/signalr/hubs" type="text/javascript"></script>
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+    <script src="js/jquery.blockUI.js"></script>
+    <script type="text/javascript" src="js/EcazaneIST.js"></script>
+    <script type="text/javascript" src="PushNotification.js"></script>
+    <script src="js/jquery.timeTo.min.js"></script>
+    <script>
+        var chat;
+        $(document).ready(function () {
+            $('#pagefour').css("display","none");
+            var applicID = window.localStorage.getItem("AppId");
+            if(applicID != null &&  applicID != "" &&  applicID != undefined ){
+                signalRConnection();
+            }
+            document.addEventListener('deviceready', onDeviceReady, true);
+//            var ul = document.getElementById("contactlist");
+//            ul.onclick = function(event) {
+//                    var target = getEventTarget(event);
+//                    alert(target.value);
+//            };
+                          $("#contactlist").delegate('li', 'click', function(){
+                                                        inviteFriend(this);
+                                                     });
+        });
+        function sendMove() {
+            var strGroupName = $('#groupName').val();
+            if (typeof strGroupName !== 'undefined' && strGroupName !== false)
+                chat.server.send($('#playWithAppId').val(), strGroupName, cellX, cellY,playerWM);
+            return;
+        }
+        function getEventTarget(e) {
+            e = e || window.event;
+            return e.target || e.srcElement;
+        }
+        function signalRConnection(){
+        // Proxy created on the fly
+        $.connection.hub.url = 'http://118.139.182.155/Game/signalr';
+        
+        $.connection.hub.qs = { "appId": window.localStorage.getItem("AppId")};
+        // Start the connection
+        $.connection.hub.start({ jsonp: true });
+        chat = $.connection.chatHub;
+        chat.client.OnlineStatus = function (connectionId, userList) {
+        
+        };
+        
+        chat.client.joined = function (connectionId, userList) {
+        
+        };
+        
+        chat.client.setChatWindow = function (strGroupName, playWithAppId, requestAccepterPhoneNumber) {
+        $("#groupName").val(strGroupName);
+        $("#playWithAppId").val(playWithAppId);
+        if(requestAccepterPhoneNumber.length != 0){
+        isOnline = true;
+        //$.mobile.changePage("#pagethree", { transition: "none" });
+        
+        $('#pagefour').css("display","none");
+        window.location.hash = 'pagethree';
+        $.mobile.initializePage();
+        $('#timer').append('<div id="countdown-1"></div>');
+        //$('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
+        alert(requestAccepterPhoneNumber + " accept your request.");
+        $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                                 sendMoveForTimeOut();
+                                 });
+        }
+        };
+        // Declare a function on the chat hub so the server can invoke it
+        chat.client.addMove = function (appIdTo, groupName, x, y, pwm) {
+            $('#screenHome').unblock();
+            if(x != -1 && y != -1){
+                playMove(x, y);
+                round += 1;
+                // Check if is win occured
+                var isWin = false;
+                isWin = checkResults();
+                if (isWin) {
+                    
+                    isWinOccured = true;
+                    var prevLevel = window.localStorage.getItem("Level");
+                    var nextLevel = parseInt(prevLevel);
+                    if (nextLevel == winSteak && gameType == 2) {
+                        $('#reset').html('Next Level');
+                        changeText = true;
+                    }
+                    alert("Player " + playerWM + " wins");
+                }
+                else {
+                    if (round == (boardsize * boardsize)) {
+                        alert("Draw");
+                        isWinOccured = true;
+                        
+                    }
+                    else {
+                        // Switch players
+                        switchPlayer();
+                        if (gameType == 2) {
+                            doMouseUp(event);
+                        }
+                    }
+                }
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                                         sendMoveForTimeOut();
+                                         });
+                                         return;
+            }
+            else{
+                switchPlayer();
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                                         sendMoveForTimeOut();
+                                         });
+                                         return;
+            }
+        };
+        $("#broadcast").click(function () {
+        // Call the chat method on the server
+        chat.server.send($('#msg').val());
+        });
+        // Start the connection
+        $.connection.hub.start(function () {
+        chat.server.getAllOnlineStatus();
+        });
+        // send request
+        $('.UserItem').click(function () {
+        chat.server.sendRequest(window.localStorage.getItem("AppId"), '03235260943', gameType, boardsize, noOfPlayers, winSteak);
+        });
+        chat.client.userNotRegistered = function () {
+            alert("Requested user is not registered!" );
+        };
+        //
+        
+        // show request to user
+        chat.client.showRequestDialog = function (formAppId, toAppId, gmType, bdSize, playerz, winStk) {
+        
+        var showRequest = $("#showRequestDiv").clone(true);
+      
+        $('#showRequestDiv #lbl').text('fsgds');
+        var label = $("<label>").text('');
+            $(label).text("request from :" + formAppId);
+            $(showRequest).append(label);
+            $(showRequest).attr('requestFromAndTo', formAppId + ',' + toAppId);
+            $(showRequest).css('display', 'block');
+
+              
+            $("#requestApprovalDiv").append(showRequest);
+            $(showRequest).css('display', 'block');
+            
+
+            $(showRequest).show();
+
+            // Set board size
+            $('#boardSize').val(bdSize);
+            var boardSz = $('#boardSize').val();
+            boardsize = parseInt(boardSz);
+            // Set number of players
+            $('#players').val(playerz);
+            var totalPlayers = $('#players').val();
+            noOfPlayers = parseInt(totalPlayers);
+            // Set winning Steak
+            $('#winningSteak').val(winStk);
+            winSteak = parseInt($('#winningSteak').val());
+            cellSz = 0;
+            playerWM = 1;
+            round = 0;
+            isWinOccured = false;
+            defaultData = '-1';
+            canvas = document.getElementById("myCanvas");
+            canvasCtx = canvas.getContext("2d");
+            var str;
+            for (i = 0; i < bdSize; i++) {
+                gameMatrix[i] = new Array();
+                }
+                for (i = 0; i < bdSize; i++) {
+                for (j = 0; j < bdSize; j++) {
+                gameMatrix[i][j] = '-1';
+                }
+                }
+                circle = 'img/Circle.png';
+                cross = 'img/Cross.png';
+                tick = 'img/Tick.png';
+                crossCircle = 'img/crossCircle.png';
+                tickCircle = 'img/tickCircle.png';
+                $("#playerIcon").attr("src", cross);
+                $("#message").text("Player 1 put a \"Cross\" on board");
+                direction = "";
+                startPoint = [0, 0];
+                endPoint = [0, 0];
+                gameType = gmType;
+                };
+        
+                $('#accept').click(function () {
+                isOnline = true;
+                var strRequestFromAndTo = $(this).parent().attr('requestFromAndTo');
+                chat.server.createGroup(strRequestFromAndTo.split(",")[1], strRequestFromAndTo.split(",")[0]);
+                $("#playWithAppId").val(strRequestFromAndTo.split(",")[0]);
+                $.mobile.changePage("#pagethree", { transition: "none" });
+                if(isOnline){
+                    $('#screenHome').block({
+                        message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
+                        css: { border: '3px solid #01bca7' }
+                    });
+//                $.blockUI({ message: '<img src="img/busy.gif" /> Waiting for other player to play move...' });
+                }
+                $('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                                                            
+                });
+                myViewModel.resetBoard();
+                });
+                //request reject
+                $('.cancel').click(function () {
+                var strRequestFromAndTo = $(this).parent().attr('requestFromAndTo');
+                chat.server.cancelRequest($('#hdnAppId').val(), strRequestFromAndTo.split(",")[0]);
+                });
+                
+                chat.client.showCancelRequestAlert = function (currentUserId) {
+                alert("Request cnacel by :" + currentUserId);
+                };
+                $(".ChatSend").click(function () {
+                strChatText = $('.ChatText', $(this).parent()).val();
+                if (strChatText != '') {
+                var strGroupName = $(this).parent().attr('groupname');
+                if (typeof strGroupName !== 'undefined' && strGroupName !== false)
+                chat.server.send($("#hdnUserName").val() + ' : ' + strChatText, $(this).parent().attr('groupname'));
+                $('.ChatText', $(this).parent()).find('ul').append(strChatText);
+                $('.ChatText', $(this).parent()).val('');
+                }
+                // return false;
+                });
+                
+                
+                $('.ChatClose').click(function () {
+                var strGroupName = $(this).parent().attr('groupname');
+                chat.server.closeGroup(strGroupName);
+                
+                });
+                chat.client.closeChatWindow = function (strGroupName) {
+                $('#chatContainer div[groupname=' + strGroupName + ']').remove();
+                $('#chatContainer div[groupname=' + strGroupName + ']').empty();
+                };
+        }
+    
+        function setCanvasDimensions(width, height) {
+            // Set canvas width and hight
+            canvaas = document.getElementById('myCanvas');
+            canvaas.setAttribute('width', width);
+            canvaas.setAttribute('height', height);
+        }
+    function sendMoveForTimeOut(){
+        // first switch players
+        switchPlayer();
+        // Send Empty move
+        var strGroupName = $('#groupName').val();
+        if (typeof strGroupName !== 'undefined' && strGroupName !== false)
+            chat.server.send($('#playWithAppId').val(), strGroupName, -1, -1, playerWM);
+        $('#screenHome').block({
+                               message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
+                               css: { border: '3px solid #01bca7' }
+                               });
+        $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                                                        });
+                                                        return;
+    }
+    // Load Contacts
+    function loadContacts() {
+        appId = window.localStorage.getItem("AppId");
+        if (appId === undefined || appId === null || appId.length === 0) {
+            MobileNumber = true;
+            // if no level then set level
+            getMobileNumber();
+        }
+        if(!MobileNumber){
+            loadContactsNow();
+        }
+    }
+    function loadContactsNow(){
+        $("ul").empty();
+        $('#pagefour').css("display", "block");
+        // specify contact search criteria
+        var options = new ContactFindOptions();
+        options.filter = "";          // empty search string returns all contacts
+        options.multiple = true;      // return multiple results
+        var fields = ["name", "phoneNumbers"];
+        $.blockUI({
+                  message: '<img src="img/busy.gif" /> Just a moment...',
+                  css: { border: '3px solid #01bca7' }
+                  });
+        // find contacts
+        navigator.contacts.find(fields, onSuccess, onError, options);
+    }
+    
+    // onSuccess: Get a snapshot of the current contacts
+    //
+    function onSuccess(contacts) {
+                  //setTimeout($.unblockUI, 2000);
+                  contacts.sort();
+                  for (var i = 0; i < contacts.length; i++)
+                  {
+                      if (contacts[i].phoneNumbers)
+                      {
+                          for (var j=0; j<1; j++)
+                          {
+                              $('#contactlist').append(
+                                                       '<li class="ui-li ui-li-static ui-btn-up-c" id="'+contacts[i].phoneNumbers[j].value+'">' +contacts[i].name.formatted+
+                                                       '</li>');
+                          }
+                      }
+                  }
+                  $.unblockUI();
+                  //var desc = false;
+                  //sortUnorderedList("contactlist", desc);
+                  //$('#contactlist').listview('refresh');
+    }
+    // onError: Failed to get the contacts
+    
+    function onError(contactError) {
+        $.unblockUI();
+        alert('Error!');
+    }
+    function sortUnorderedList(ul, sortDescending) {
+        if(typeof ul == "string")
+        ul = document.getElementById(ul);
+        
+        var lis = ul.getElementsByTagName("LI");
+        var vals = [];
+        
+        for(var i = 0, l = lis.length; i < l; i++)
+        vals.push(lis[i].innerHTML);
+        
+        vals.sort();
+        
+        if(sortDescending)
+        vals.reverse();
+        
+        for(var i = 0, l = lis.length; i < l; i++)
+        lis[i].innerHTML = vals[i];
+    }
+    function inviteFriend(element){
+        var str = element.id;
+        str = str.replace( /,/g, "" );
+        str=str.replace( /-/g, "" );
+        str = str.replace(/\s/g, '');
+        var idx=  str.length-10
+        str = str.substring(idx, str.length);
+        alert("Send Request to "+str);
+        chat.server.sendRequest(window.localStorage.getItem("AppId"), str, gameType, boardsize, noOfPlayers, winSteak);
+    }
+    function showRequestDialogPN(formAppId, toAppId, gmType, bdSize, playerz, winStk) {
+        // alert("showRequestDialogPN");
+        
+        var showRequest = $("#showRequestDiv").clone(true);
+        $('#showRequestDiv #lbl').text('fsgds');
+        var label = $("<label>").text('');
+        $(label).text("request from :" + formAppId);
+        $(label).css("margin-left", "20px");
+        $(showRequest).append(label);
+        $(showRequest).attr('requestFromAndTo', formAppId + ',' + toAppId);
+        //$(showRequest).css('display', 'block');
+        $(showRequest).show();
+        $("#requestApprovalDiv").append(showRequest);
+        showRequest.show();
+        //alert($(showRequest).css('display'));
+        // Set board size
+        $('#boardSize').val(bdSize);
+        var boardSz = $('#boardSize').val();
+        boardsize = parseInt(boardSz);
+        // Set number of players
+        $('#players').val(playerz);
+        var totalPlayers = $('#players').val();
+        noOfPlayers = parseInt(totalPlayers);
+        // Set winning Steak
+        $('#winningSteak').val(winStk);
+        winSteak = parseInt($('#winningSteak').val());
+        cellSz = 0;
+        playerWM = 1;
+        round = 0;
+        isWinOccured = false;
+        defaultData = '-1';
+        canvas = document.getElementById("myCanvas");
+        canvasCtx = canvas.getContext("2d");
+        var str;
+        for (i = 0; i < bdSize; i++) {
+            gameMatrix[i] = new Array();
+        }
+        for (i = 0; i < bdSize; i++) {
+            for (j = 0; j < bdSize; j++) {
+                gameMatrix[i][j] = '-1';
+            }
+        }
+        circle = 'img/Circle.png';
+        cross = 'img/Cross.png';
+        tick = 'img/Tick.png';
+        crossCircle = 'img/crossCircle.png';
+        tickCircle = 'img/tickCircle.png';
+        $("#playerIcon").attr("src", cross);
+        $("#message").text("Player 1 put a \"Cross\" on board");
+        direction = "";
+        startPoint = [0, 0];
+        endPoint = [0, 0];
+        gameType = gmType;
+    }
+    </script>
+    <script>
+        var pushNotification;
+        
+        function onDeviceReady() {
+            pushNotification = window.plugins.pushNotification;
+            pushNotification.register(tokenHandler, errorHandler, {"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});	// required!
+        }
+    
+    // handle APNS notifications for iOS
+    onNotificationAPN = function(e) {
+        if (e.alert) {
+            var mySplitResult1 = e.alert;
+            var mySplitResult=mySplitResult1.split(",");
+            showRequestDialogPN(mySplitResult[1],mySplitResult[2],mySplitResult[3],mySplitResult[4],mySplitResult[5],mySplitResult[6]);
+            navigator.notification.alert("A");
+        }
+        
+        if (e.sound) {
+            var snd = new Media(e.sound);
+            snd.play();
+        }
+        
+        if (e.badge) {
+            pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);
+        }
+    };
+    function tokenHandler (result) {
+        // iOS push server needs to know the token before it can push to this device
+        // here is where you might want to send it the token for later use.
+        var DeviceID = window.localStorage.getItem("DeviceId");
+        if (DeviceID === undefined || DeviceID === null || DeviceID.length === 0) {
+            // if no level then set level
+            window.localStorage.setItem("DeviceId",result);
+            
+        }
+    }
+    
+    function successHandler (result) {
+        alert( result );
+    }
+    
+    function errorHandler (error) {
+        alert( error );
+    }
+    
+    
+    </script>
+</body>
+</html>

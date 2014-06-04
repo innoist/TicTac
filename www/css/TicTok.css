@@ -1,0 +1,63 @@
+body {
+
+
+}
+
+
+div {
+    display: block;
+}
+
+#screenHome
+{
+
+}
+#pagetwo-popup{
+
+    width: 100%;
+    height: 150%;
+}
+
+#myCanvas
+{
+    border: 1px solid #01bca7;
+}
+.ui-button {
+text-align: center;
+cursor: pointer;
+position: relative;
+margin: .5em 5px;
+padding: 0;
+}
+.ui-image{
+    display: block;
+    margin-left: 4px;
+    margin-top: 10px;
+}
+.ui-label{
+    margin-left: 4px;
+    margin-top: 0px;
+    display: inline;
+    font-family: Times New Roman, serif;
+    
+}
+
+#screenHomeA{
+
+    text-align:center;
+    display: block;
+    font-family: Times New Roman, serif;
+    font-size: 20px;
+    width: 80%;
+    height: 100%;
+    padding: 10% 10%;
+}
+#boardButtons{
+    
+}
+#pagetwo{
+    margin-left: auto;
+    margin-right: auto;
+    width:85%;
+    height:60%;
+}
