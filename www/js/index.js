@@ -33,7 +33,18 @@ var app = {
     // The scope of 'this' is the event. In order to call the 'receivedEvent'
     // function, we must explicity call 'app.receivedEvent(...);'
     onDeviceReady: function() {
+        function sendSMS(){
+            //alert("Requested user is not registered!" );
+            
+        };
+
         app.receivedEvent('deviceready');
+    },
+    success : function () {
+        //alert("Message sent successfully");
+    },
+    error : function (e) {
+        //alert("Message Failed:" + e);
     },
     // Update DOM on a Received Event
     receivedEvent: function(id) {

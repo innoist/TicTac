@@ -125,6 +125,13 @@ module.exports = [
         "clobbers": [
             "cordova.logger"
         ]
+    },
+    {
+        "file": "plugins/org.apache.cordova.plugin.sms/www/sms.js",
+        "id": "org.apache.cordova.plugin.sms.Sms",
+        "clobbers": [
+            "window.sms"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -134,7 +141,8 @@ module.exports.metadata =
     "org.apache.cordova.contacts": "0.2.11-dev",
     "com.phonegap.plugins.PushPlugin": "2.2.0",
     "org.apache.cordova.device": "0.2.10-dev",
-    "org.apache.cordova.console": "0.2.8"
+    "org.apache.cordova.console": "0.2.8",
+    "org.apache.cordova.plugin.sms": "0.1.0"
 }
 // BOTTOM OF METADATA
 });

@@ -33,6 +33,7 @@ var mobNumber;
 var isOnline = false;
 var changeText = false;
 var MobileNumber=false;
+var sendSMSToNumber;
 // Declare Array
 var gameMatrix = new Array();
 var contacts = new Array();
@@ -88,9 +89,9 @@ $(function () {
     // if no level then set level
     setLevel();
   }
-  // Check App Id
-  window.location.hash = 'contact';
-  $.mobile.initializePage();
+  
+//  window.location.hash = 'pageone';
+//  $.mobile.initializePage();
   
   $(document).on('pagebeforeshow', '#pagethree', function(){
                  $(this).width(screenwidth+15);
@@ -117,10 +118,10 @@ $(function () {
   c9.addEventListener("touchend", saveGameSettings, false);
 //  var c10 = document.getElementById("resetLevel");
 //  c10.addEventListener("touchstart", resetLevel, false);
-  var c11 = document.getElementById("start1");
-  c11.addEventListener("touchend", loadPageContact, false);
-  var c11 = document.getElementById("start1");
-  c11.addEventListener("touchend", loadPageContact, false);
+//  var c11 = document.getElementById("start1");
+//  c11.addEventListener("touchend", loadPageContact, false);
+//  var c11 = document.getElementById("accept");
+//  c11.addEventListener("click", acceptRequest, false);
   var c12 = document.getElementById("mobile");
   c12.addEventListener("click", getAppIdFromServerByMobileNumber, false);
   var c12 = document.getElementById("invite");
@@ -265,8 +266,10 @@ $(function () {
                            $('#reset').html('Next Level');
                            changeText = true;
                            }
+                           $('#countdown-1').timeTo("stop");
                            alert("Player " + playerWM + " wins");
                            }, 200);
+  
             }
             else {
                 if(round == (boardsize*boardsize)){
@@ -290,13 +293,13 @@ $(function () {
             sendMove();
   
             if(!isWinOccured){
-                    $('#screenHome').block({
-                         message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
-                                           css: { border: '3px solid #01bca7' }
-                                           });
+                $('#screenHome').block({
+                        message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
+                        css: { border: '3px solid #01bca7' }
+                });
                 $('#countdown-1').timeTo("reset");
-                $('#countdown -1').timeTo({ displayHours: false, displayDays: 0 }, 10, function () {
-                           });
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0 }, 10, function () {
+                });
 //                $.blockUI({ message: '<img src="img/busy.gif" /> Waiting for other player to play move...' });
             }
         }
@@ -493,6 +496,7 @@ function resetBoardEvent(){
 // displays the starting page of game
 function quitGame(){
     $('#screenHome').unblock();
+    $('#showRequestDiv').css('display','none');
     window.location.hash = 'pageone';
     $.mobile.initializePage();
 }

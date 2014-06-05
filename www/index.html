@@ -20,13 +20,10 @@
 </head>
 <body>
     
-    <div data-role="page" id="contact">
-       <a id="start1" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto; margin-top:20px">Start</a>
+    <div class="app">
+        
     </div>
-    <div id="showRequestDiv" style="margin-top:120px;display:none;">
-        <input type="button" value="Accept" id="accept" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
-        <input type="button" value="Reject" id="reject" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="width: 25%; margin-left: auto; margin-right: auto"/>
-    </div>
+    
     <div id="requestApprovalDiv" style="margin-top:120px;">
         <input  type="hidden" id="groupName"/>
         <input  type="hidden" id="playWithAppId"/>
@@ -45,7 +42,10 @@
                 <!--<a id="resetLevel" data-rel="popup" class="ui-btn ui-shadow ui-btn-corner-all" data-transition="slideup">Reset Level</a>
                 <label id="toast" class="ui-label" style="display: block; font-size: 170%"></label>-->
             </div>
-            
+            <div id="showRequestDiv" style="margin-top:120px;display:none;">
+                <input type="button" value="Accept" id="accept" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="margin-left: auto; margin-right: auto"/>
+                <input type="button" value="Reject" id="reject" class="ui-btn ui-shadow ui-icon-arrow-r ui-btn-icon-right ui-btn-corner-all ui-nodisc-icon ui-alt-icon" style="margin-left: auto; margin-right: auto"/>
+            </div>
             <div id="pagetwo" data-role="popup" data-dismissible="true" data-theme="a" class="ui-corner-all ui-popup ui-body-a ui-overlay-shadow" style="margin-top:20px">
                 <a href="#" data-rel="back" class="ui-btn ui-corner-all ui-shadow ui-btn ui-icon-delete ui-btn-icon-notext ui-btn-right">Close</a>
                 <div id="screenHomeA">
@@ -74,7 +74,7 @@
         </div>
     </div>
     <div data-role="content" id="pagefour">
-        <a id="btnClose" data-rel="close" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left" style="margin-left:35%; margin-top:20px">Close</a>
+        <a id="btnClose" class="ui-btn ui-btn-inline ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left" style="position:fixed; margin-left:35%; margin-top:20px">Close</a>
         <ul id="contactlist" data-role="listview" data-filter="true" class="ui-listview"></ul>
     </div>
     <div data-role="page" id="pagethree" style="">
@@ -117,23 +117,40 @@
     <script type="text/javascript" src="js/EcazaneIST.js"></script>
     <script type="text/javascript" src="PushNotification.js"></script>
     <script src="js/jquery.timeTo.min.js"></script>
-    <script>
+    <script type="text/javascript" src="js/sms.js">  </script>
+    <script type="text/javascript">
+        app.initialize();
         var chat;
+        var reqFormAppId;
+        var reqToAppId;
         $(document).ready(function () {
             $('#pagefour').css("display","none");
+            $('#accept').click(function () {
+                isOnline = true;
+                chat.server.createGroup(reqToAppId, reqFormAppId);
+                $("#playWithAppId").val(reqFormAppId);
+                $.mobile.changePage("#pagethree", { transition: "none" });
+                if(isOnline){
+                    $('#screenHome').block({
+                        message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
+                        css: { border: '3px solid #01bca7' }
+                    });
+                }
+                $('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () { });
+                myViewModel.resetBoard();
+            });
             var applicID = window.localStorage.getItem("AppId");
             if(applicID != null &&  applicID != "" &&  applicID != undefined ){
                 signalRConnection();
             }
             document.addEventListener('deviceready', onDeviceReady, true);
-//            var ul = document.getElementById("contactlist");
-//            ul.onclick = function(event) {
-//                    var target = getEventTarget(event);
-//                    alert(target.value);
-//            };
-                          $("#contactlist").delegate('li', 'click', function(){
-                                                        inviteFriend(this);
-                                                     });
+            $("#contactlist").delegate('li', 'click', function(){
+                    inviteFriend(this);
+            });
+            $("#contactlist").delegate('img', 'click', function(){
+                    loadOtherNumbers(this);
+            });
         });
         function sendMove() {
             var strGroupName = $('#groupName').val();
@@ -162,22 +179,22 @@
         };
         
         chat.client.setChatWindow = function (strGroupName, playWithAppId, requestAccepterPhoneNumber) {
-        $("#groupName").val(strGroupName);
-        $("#playWithAppId").val(playWithAppId);
-        if(requestAccepterPhoneNumber.length != 0){
-        isOnline = true;
-        //$.mobile.changePage("#pagethree", { transition: "none" });
+            $("#groupName").val(strGroupName);
+            $("#playWithAppId").val(playWithAppId);
+            if(requestAccepterPhoneNumber.length != 0){
+                isOnline = true;
+                //$.mobile.changePage("#pagethree", { transition: "none" });
         
-        $('#pagefour').css("display","none");
-        window.location.hash = 'pagethree';
-        $.mobile.initializePage();
-        $('#timer').append('<div id="countdown-1"></div>');
-        //$('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
-        alert(requestAccepterPhoneNumber + " accept your request.");
-        $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
-                                 sendMoveForTimeOut();
-                                 });
-        }
+                $('#pagefour').css("display","none");
+                window.location.hash = 'pagethree';
+                $.mobile.initializePage();
+                $('#timer').append('<div id="countdown-1"></div>');
+                //$('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
+                alert(requestAccepterPhoneNumber + " accept your request.");
+                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
+                    sendMoveForTimeOut();
+                });
+            }
         };
         // Declare a function on the chat hub so the server can invoke it
         chat.client.addMove = function (appIdTo, groupName, x, y, pwm) {
@@ -197,7 +214,9 @@
                         $('#reset').html('Next Level');
                         changeText = true;
                     }
+                    $('#countdown-1').timeTo("stop");
                     alert("Player " + playerWM + " wins");
+                    return;
                 }
                 else {
                     if (round == (boardsize * boardsize)) {
@@ -227,29 +246,36 @@
             }
         };
         $("#broadcast").click(function () {
-        // Call the chat method on the server
-        chat.server.send($('#msg').val());
+            // Call the chat method on the server
+            chat.server.send($('#msg').val());
         });
         // Start the connection
         $.connection.hub.start(function () {
-        chat.server.getAllOnlineStatus();
+            chat.server.getAllOnlineStatus();
         });
         // send request
         $('.UserItem').click(function () {
-        chat.server.sendRequest(window.localStorage.getItem("AppId"), '03235260943', gameType, boardsize, noOfPlayers, winSteak);
+            chat.server.sendRequest(window.localStorage.getItem("AppId"), '03235260943', gameType, boardsize, noOfPlayers, winSteak);
         });
         chat.client.userNotRegistered = function () {
-            alert("Requested user is not registered!" );
+            if (confirm("User is not Registered. Press Ok to Send SMS") == true) {
+                var number = '0'+sendSMSToNumber;
+                var message = "Play with me http://onelink.to/4xk5k2";
+                //alert("To = "+number+", "+message);
+                var intent = ""; //leave empty for sending sms using default intent
+                sms.send(number, message, intent, app.success, app.error);
+            } else {
+                return;
+            }
         };
-        //
         
         // show request to user
         chat.client.showRequestDialog = function (formAppId, toAppId, gmType, bdSize, playerz, winStk) {
         
-        var showRequest = $("#showRequestDiv").clone(true);
+            var showRequest = $("#showRequestDiv").clone(true);
       
-        $('#showRequestDiv #lbl').text('fsgds');
-        var label = $("<label>").text('');
+            $('#showRequestDiv #lbl').text('fsgds');
+            var label = $("<label>").text('');
             $(label).text("request from :" + formAppId);
             $(showRequest).append(label);
             $(showRequest).attr('requestFromAndTo', formAppId + ',' + toAppId);
@@ -300,37 +326,19 @@
                 startPoint = [0, 0];
                 endPoint = [0, 0];
                 gameType = gmType;
-                };
+        };
         
-                $('#accept').click(function () {
-                isOnline = true;
-                var strRequestFromAndTo = $(this).parent().attr('requestFromAndTo');
-                chat.server.createGroup(strRequestFromAndTo.split(",")[1], strRequestFromAndTo.split(",")[0]);
-                $("#playWithAppId").val(strRequestFromAndTo.split(",")[0]);
-                $.mobile.changePage("#pagethree", { transition: "none" });
-                if(isOnline){
-                    $('#screenHome').block({
-                        message: '<img src="img/busy.gif" /> Waiting for other player to play move...',
-                        css: { border: '3px solid #01bca7' }
-                    });
-//                $.blockUI({ message: '<img src="img/busy.gif" /> Waiting for other player to play move...' });
-                }
-                $('#timer').append('<div id="countdown-1" style="display: inline;"></div>');
-                $('#countdown-1').timeTo({ displayHours: false, displayDays: 0}, 10, function () {
-                                                            
-                });
-                myViewModel.resetBoard();
-                });
-                //request reject
-                $('.cancel').click(function () {
-                var strRequestFromAndTo = $(this).parent().attr('requestFromAndTo');
-                chat.server.cancelRequest($('#hdnAppId').val(), strRequestFromAndTo.split(",")[0]);
-                });
                 
-                chat.client.showCancelRequestAlert = function (currentUserId) {
-                alert("Request cnacel by :" + currentUserId);
-                };
-                $(".ChatSend").click(function () {
+        //request reject
+        $('.cancel').click(function () {
+            var strRequestFromAndTo = $(this).parent().attr('requestFromAndTo');
+            chat.server.cancelRequest($('#hdnAppId').val(), strRequestFromAndTo.split(",")[0]);
+        });
+                
+        chat.client.showCancelRequestAlert = function (currentUserId) {
+            alert("Request cnacel by :" + currentUserId);
+        };
+        $(".ChatSend").click(function () {
                 strChatText = $('.ChatText', $(this).parent()).val();
                 if (strChatText != '') {
                 var strGroupName = $(this).parent().attr('groupname');
@@ -340,26 +348,25 @@
                 $('.ChatText', $(this).parent()).val('');
                 }
                 // return false;
-                });
+        });
                 
                 
-                $('.ChatClose').click(function () {
-                var strGroupName = $(this).parent().attr('groupname');
-                chat.server.closeGroup(strGroupName);
-                
-                });
-                chat.client.closeChatWindow = function (strGroupName) {
-                $('#chatContainer div[groupname=' + strGroupName + ']').remove();
-                $('#chatContainer div[groupname=' + strGroupName + ']').empty();
-                };
-        }
+        $('.ChatClose').click(function () {
+            var strGroupName = $(this).parent().attr('groupname');
+            chat.server.closeGroup(strGroupName);
+        });
+        chat.client.closeChatWindow = function (strGroupName) {
+            $('#chatContainer div[groupname=' + strGroupName + ']').remove();
+            $('#chatContainer div[groupname=' + strGroupName + ']').empty();
+        };
+    }
     
-        function setCanvasDimensions(width, height) {
+    function setCanvasDimensions(width, height) {
             // Set canvas width and hight
             canvaas = document.getElementById('myCanvas');
             canvaas.setAttribute('width', width);
             canvaas.setAttribute('height', height);
-        }
+    }
     function sendMoveForTimeOut(){
         // first switch players
         switchPlayer();
@@ -415,12 +422,25 @@
                           for (var j=0; j<1; j++)
                           {
                               $('#contactlist').append(
-                                                       '<li class="ui-li ui-li-static ui-btn-up-c" id="'+contacts[i].phoneNumbers[j].value+'">' +contacts[i].name.formatted+
+                                                       '<li class="ui-li ui-li-static ui-btn-up-c" id="'+contacts[i].phoneNumbers[j].value+'">' +contacts[i].name.formatted+'<img src="img/plus.jpeg" style="width:30px; height:30px;float:right" value="'+contacts[i].name.formatted+'">'+
                                                        '</li>');
                           }
                       }
                   }
                   $.unblockUI();
+                  $("#contactlist").html(
+                                           
+                                           $("#contactlist").children("li").sort(function (a, b) {
+                                                                                   
+                                                                                   return $(a).text().toUpperCase().localeCompare(
+                                                                                                                                  
+                                                                                                                                  $(b).text().toUpperCase());
+                                                                                   
+                                                                                   }) // End Sort
+                                           
+                                           ); // End HTML
+
+                  //$('#contactlist').sortable();
                   //var desc = false;
                   //sortUnorderedList("contactlist", desc);
                   //$('#contactlist').listview('refresh');
@@ -431,24 +451,6 @@
         $.unblockUI();
         alert('Error!');
     }
-    function sortUnorderedList(ul, sortDescending) {
-        if(typeof ul == "string")
-        ul = document.getElementById(ul);
-        
-        var lis = ul.getElementsByTagName("LI");
-        var vals = [];
-        
-        for(var i = 0, l = lis.length; i < l; i++)
-        vals.push(lis[i].innerHTML);
-        
-        vals.sort();
-        
-        if(sortDescending)
-        vals.reverse();
-        
-        for(var i = 0, l = lis.length; i < l; i++)
-        lis[i].innerHTML = vals[i];
-    }
     function inviteFriend(element){
         var str = element.id;
         str = str.replace( /,/g, "" );
@@ -456,24 +458,24 @@
         str = str.replace(/\s/g, '');
         var idx=  str.length-10
         str = str.substring(idx, str.length);
-        alert("Send Request to "+str);
-        chat.server.sendRequest(window.localStorage.getItem("AppId"), str, gameType, boardsize, noOfPlayers, winSteak);
+        sendSMSToNumber = str;
+        if (confirm("Send Request to " + str) == true) {
+            chat.server.sendRequest(window.localStorage.getItem("AppId"), str, gameType, boardsize, noOfPlayers, winSteak);
+        } else {
+            return;
+        }
+    }
+    function loadOtherNumbers(element){
+        var sss = $(element).val();
+        alert( sss);
+        $("#contactlist").undelegate('li', 'click', inviteFriend(this));
     }
     function showRequestDialogPN(formAppId, toAppId, gmType, bdSize, playerz, winStk) {
-        // alert("showRequestDialogPN");
-        
-        var showRequest = $("#showRequestDiv").clone(true);
-        $('#showRequestDiv #lbl').text('fsgds');
-        var label = $("<label>").text('');
-        $(label).text("request from :" + formAppId);
-        $(label).css("margin-left", "20px");
-        $(showRequest).append(label);
-        $(showRequest).attr('requestFromAndTo', formAppId + ',' + toAppId);
-        //$(showRequest).css('display', 'block');
-        $(showRequest).show();
-        $("#requestApprovalDiv").append(showRequest);
-        showRequest.show();
-        //alert($(showRequest).css('display'));
+        //alert(formAppId + ',' + toAppId);
+        reqFormAppId = formAppId;
+        reqToAppId = toAppId;
+        $('#showRequestDiv').css('display', 'block');
+
         // Set board size
         $('#boardSize').val(bdSize);
         var boardSz = $('#boardSize').val();
